@@ -1,0 +1,12 @@
+Big Question: 
+Find the most similar sequence in dog_breeds.fa to the sequence given in mystery.fa 
+
+most basic: 
+> function 1: isolate the sequences using the biopython seq method maybe, or by splitting the sequences  
+> function 2: calculate the sequence identity to the mystery.fa 
+> function 3: return the percentage difference between the two structures and return the most similar sequence 
+    - Maybe generate a sequence alignment? 
+
+stretch goal:
+> The probability that the mystery sequence is that of each given breed (p-value)
+> Create a reconstructed phylogeny - using matplotlib?
