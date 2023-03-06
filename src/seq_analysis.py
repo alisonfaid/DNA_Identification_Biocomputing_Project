@@ -33,9 +33,9 @@ def p_identity(alignment_scores, db_lengths):
         percent_id_list.append(perc_id) 
     return percent_id_list
 
-## Function that outputs the most similar sequence and the % difference between the target and database seq
 def final_output():
-    ## DOCSTRING
+## Find the highest sequence identity and return the resulting sequence along with the dog breed
+    
     return
 
 
