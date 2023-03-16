@@ -13,5 +13,5 @@ dog_breeds_2 = SeqIO.parse(dog_breeds_2, 'fasta')
 alignments = sa.alignment(mystery, dog_breeds)
 sequence_lengths = sa.seq_lens(dog_breeds_2)
 percentage_id = sa.p_identity(alignments, sequence_lengths)
-
-print(percentage_id)
+final = final_output(percentage_identity, dog_breeds_file)
+print(final)

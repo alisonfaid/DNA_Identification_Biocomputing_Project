@@ -33,10 +33,15 @@ def p_identity(alignment_scores, db_lengths):
         percent_id_list.append(perc_id) 
     return percent_id_list
 
-def final_output():
+def final_output(p_id_list, database_file):
 ## Find the highest sequence identity and return the resulting sequence along with the dog breed
-    
-    return
+    max_p_id = max(p_id_list)
+    max_index = p_id_list.index(max_p_id)
+    percentage_difference = 100 - max_p_id
+    for i, record in enumerate(SeqIO.parse(database_file, "fasta")):
+        if i == max_index: 
+            description = record.description
+            return description, record.seq
 
 
 
