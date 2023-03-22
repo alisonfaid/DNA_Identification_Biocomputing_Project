@@ -54,8 +54,7 @@ def final_output(p_id_list, database_file):
             return f'Closest matching dog breed:{breed}{new_line}% difference:{percentage_difference}{new_line}sequence of matching breed:{record.seq}'
 
 
-database = 'data/dog_breeds.fa'
-print(final_output([99, 50, 25], database))
+
 
 
             
