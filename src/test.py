@@ -1,13 +1,21 @@
 
 from Bio import SeqIO
-from Bio import Align
+from Bio import AlignIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
 dog_breeds_file = 'data/dog_breeds.fa'
-dog_breeds = SeqIO.parse(dog_breeds_file, 'fasta')
-scores = [16695.0, 16689.0, 16688.0, 16689.0, 16706.0, 16706.0, 16688.0, 16709.0, 16705.0, 16690.0, 16688.0, 16704.0, 16704.0, 16704.0, 16704.0, 16704.0, 16704.0, 16704.0, 16704.0, 16704.0, 16687.0, 16689.0, 16687.0, 16687.0, 16689.0, 16687.0, 16704.0, 16707.0, 16686.0, 16688.0, 16688.0, 16688.0, 16707.0, 16688.0, 16702.0, 16696.0, 16694.0, 16706.0, 16704.0, 16703.0, 16706.0, 16693.0, 16705.0, 16705.0, 16703.0, 16703.0, 16703.0, 16693.0, 16693.0, 16693.0, 16693.0, 16693.0, 16704.0, 16704.0, 16704.0, 16702.0, 16702.0, 16702.0, 16702.0, 16691.0, 16692.0, 16692.0, 16701.0, 16693.0, 16703.0, 16701.0, 16703.0, 16703.0, 16701.0, 16701.0, 16701.0, 16701.0, 16703.0, 16691.0, 16691.0, 16700.0, 16700.0, 16692.0, 16692.0, 16702.0, 16700.0, 16702.0, 16695.0, 16699.0, 16699.0, 16691.0, 16699.0, 16688.0, 16683.0, 16690.0, 16704.0, 16689.0, 16689.0, 16711.0, 16688.0, 16685.0, 16688.0, 16686.0, 16683.0]
+#dog_breeds = SeqIO.parse(dog_breeds_file, 'fasta')
+
 mystery = 'data/mystery.fa'
-mystery = SeqIO.read(mystery, 'fasta')
+mystery_seq = SeqIO.read(mystery, 'fasta')
+print(mystery_seq)
+
+for i, seq_record in enumerate(SeqIO.parse(dog_breeds_file, "fasta")):
+    print(seq_record.id)
+    print(repr(seq_record.seq))
+    print(len(seq_record))
+
+
+#seq_file = SeqIO.write([mystery_seq, dog_breeds], 'seq_file.fasta', 'fasta')
     
-print(mystery.seq)
