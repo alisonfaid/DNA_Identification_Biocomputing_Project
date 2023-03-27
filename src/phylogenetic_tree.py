@@ -1,12 +1,12 @@
 from Bio import AlignIO
 from Bio import SeqIO
-from Bio import Seq
-from Bio.SeqRecord import SeqRecord
 from Bio import Phylo
 from Bio.Phylo.TreeConstruction import DistanceCalculator
 from Bio.Phylo.TreeConstruction import DistanceTreeConstructor
+from Bio.Phylo.PhyloXML import Phylogeny
 import matplotlib.pyplot as plt
-import matplotlib as mpl
+from Bio.Phylo.PhyloXML import Phylogeny
+
 
 mystery_file = 'data/mystery.fa'
 dog_breeds_file = 'data/dog_breeds.fa'
@@ -30,14 +30,23 @@ def phylogenetic_tree(alignment_file):
     constructor = DistanceTreeConstructor(calculator)
     tree = constructor.build_tree(alignment)
     
+    # Colour the mystery sequence a different colour 
+    tree = tree.as_phyloxml()
+    tree = Phylogeny.from_tree(tree)
+    print(tree)
+    
     # Plot tree
-    fig = plt.figure(figsize=(15, 7.5), dpi=100) 
+    fig = plt.figure(figsize=(20, 7.5), dpi=100) 
+    axes = fig.add_subplot(1, 1, 1)
     plt.rc('font', size=6)             
     plt.rc('xtick', labelsize=10)       
-    plt.rc('ytick', labelsize=10)    
-    plt.rc('axes', titlesize=14) 
-    tree.ladderize()		   
-    axes = fig.add_subplot(1, 1, 1)
+    plt.rc('ytick', labelsize=10)  
+    plt.rc('axes', titlesize=10)  
+    tree.ladderize()
+    
+    for clade in tree.get_terminals():
+        if 'gb|KM061522.1|' in clade.name:
+            clade.color = 'red'
     
     return Phylo.draw(tree, axes=axes)
 
