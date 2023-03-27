@@ -1,17 +1,28 @@
-import seq_analysis as sa
-from Bio import SeqIO
-from Bio import Align
+import dna_identification as id
 
-mystery_file = 'data/mystery.fa'
-dog_breeds_file = 'data/dog_breeds.fa'
-dog_breeds_2_file = 'data/dog_breeds.fa'
+mystery = 'data/mystery.fa'
+dog_breeds = 'data/dog_breeds.fa'
 
-mystery = SeqIO.read(mystery_file, 'fasta')
-dog_breeds = SeqIO.parse(dog_breeds_file, 'fasta')
-dog_breeds_2 = SeqIO.parse(dog_breeds_2_file, 'fasta')
+def run_dna_identification(target_seq, database):
+    """
+    Summary:
+    - Finds the closest matching sequence in the database to the target sequence using 
+    functions in the dna_identification module
 
-alignments = sa.alignment(mystery, dog_breeds)
-sequence_lengths = sa.seq_lens(dog_breeds_2)
-percentage_id = sa.percent_id(alignments, sequence_lengths)
-final = sa.final_output(percentage_id, dog_breeds_file)
-print(final)
+    Args:
+        target_seq (.fasta file): target sequence for identification 
+        database (.fasta file): file containing multiple sequences to compare the target 
+            sequence to.
+
+    Returns:
+        string: ID, breed name, percentage difference and sequence for the closest matching
+            sequence to the target in the database
+    """
+    alignments = id.alignment(target_seq, database)
+    sequence_lengths = id.seq_lens(database)
+    percentage_id = id.percent_id(alignments, sequence_lengths)
+    final_output = id.final_output(percentage_id, database)
+    return final_output
+
+
+print(run_dna_identification(mystery, dog_breeds))
