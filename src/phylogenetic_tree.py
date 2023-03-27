@@ -3,47 +3,64 @@ from Bio import SeqIO
 from Bio import Phylo
 from Bio.Phylo.TreeConstruction import DistanceCalculator
 from Bio.Phylo.TreeConstruction import DistanceTreeConstructor
-from Bio.Phylo.PhyloXML import Phylogeny
 import matplotlib.pyplot as plt
-from Bio.Phylo.PhyloXML import Phylogeny
+
 
 
 mystery_file = 'data/mystery.fa'
 dog_breeds_file = 'data/dog_breeds.fa'
 
-alignment = AlignIO.read(dog_breeds_file, 'fasta')
-mystery_seq = SeqIO.read(mystery_file, 'fasta')
-alignment.append(mystery_seq)
-
-def phylogenetic_tree(alignment_file):
+def create_alignment(database, target_seq):
     """
-    Creates phylogenetic tree from alignment file and plots it using matplotlib
+    Summary:
+    - Reads in aligned database file and target seq file 
+    - Appends the target seq file to the database alignment
 
     Args:
-        alignment_file (_type_): _description_
+        database (.fasta file): File containing multiple sequences which are already aligned
+        target_seq (.fasta file): File containing the target sequence
+    
+    Returns: Bio.Align.MultipleSeqAlignment: Containing the database sequences and 
+        target sequence
+
+    """
+    alignment = AlignIO.read(dog_breeds_file, 'fasta')
+    mystery_seq = SeqIO.read(mystery_file, 'fasta')
+    alignment.append(mystery_seq)
+    
+    return alignment
+
+def phylogenetic_tree(alignment):
+    """
+    Summary:
+    - Creates phylogenetic tree from alignment file and plots it using matplotlib.
+
+    Args:
+        alignment (Bio.Align.MultipleSequenceAlignment): Multiple sequence alignment 
+            containing target sequence
+    
+    Return:
+        matplotlib.figure.Figure: Phylogenetic tree of all sequences in the alignment with
+            the target sequence highlighted in red.
     """
     # Create distance calculator 
     calculator = DistanceCalculator('identity')
     distance_matrix = calculator.get_distance(alignment)
     
-    # Create phylogenetic tree
+    # Construct phylogenetic tree
     constructor = DistanceTreeConstructor(calculator)
     tree = constructor.build_tree(alignment)
     
-    # Colour the mystery sequence a different colour 
-    tree = tree.as_phyloxml()
-    tree = Phylogeny.from_tree(tree)
-    print(tree)
-    
-    # Plot tree
+    # Plot tree using matplotlib 
     fig = plt.figure(figsize=(20, 7.5), dpi=100) 
     axes = fig.add_subplot(1, 1, 1)
     plt.rc('font', size=6)             
     plt.rc('xtick', labelsize=10)       
     plt.rc('ytick', labelsize=10)  
-    plt.rc('axes', titlesize=10)  
+    plt.rc('axes', titlesize=10)
+    plt.title('Phylogenetic Tree of Dog Breeds')  
     tree.ladderize()
-    
+    # Colour the branch of the target sequence red
     for clade in tree.get_terminals():
         if 'gb|KM061522.1|' in clade.name:
             clade.color = 'red'
@@ -51,7 +68,7 @@ def phylogenetic_tree(alignment_file):
     return Phylo.draw(tree, axes=axes)
 
 
-
+alignment = create_alignment(mystery_file, dog_breeds_file)
 phylogenetic_tree(alignment)
 
 
