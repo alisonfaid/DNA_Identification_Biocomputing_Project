@@ -1,9 +1,12 @@
 import unittest
 import dna_identification as id 
 import probabilities as p
+import phylogenetic_tree as phy
 
 mystery = 'data/mystery.fa'
 dog_breeds = 'data/dog_breeds.fa'
+test_seq = 'data/test_fasta.fa'
+test_db = 'data/test_database.fa'
 
 class TestDNAIdentification(unittest.TestCase):
     
@@ -66,12 +69,11 @@ class TestProbabilities(unittest.TestCase):
         
 class TestPhylogeneticTree(unittest.TestCase):
     
+    def test_create_alignment(self):
+        # Test that the target sequence is being appended to the alignment
+        n = phy.create_alignment(test_db, test_seq)
+        self.assertEqual(str(n), 'Alignment with 3 rows and 4 columns\nAATC gb|TEST1|\nGTTA gb|TEST2|\nATCG gb|TEST123|')
         
-        
-
-        
-
-
 
 if __name__ == '__main__':
     unittest.main()
