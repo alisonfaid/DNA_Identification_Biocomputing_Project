@@ -1,5 +1,6 @@
 import numpy as np 
 import scipy.stats as sp
+from Bio import SeqIO
 
 def z_score(alignment_scores):
     """
@@ -22,7 +23,7 @@ def z_score(alignment_scores):
 
 
 
-def p_value(z_scores):
+def p_value(z_scores, database):
     """
     Summary:
     Calculates the p-value of the given z-scores
@@ -33,10 +34,23 @@ def p_value(z_scores):
     Returns:
         list: p-values for each alignment
     """
+    
     p_values = []
     for z in z_scores:
-        p = sp.norm.sf(abs(z))
-        p_values.append(p)
-    return p_values
+        p_value = sp.norm.sf(abs(z))
+        p_values.append(p_value)
+    breeds = []
+    data = SeqIO.parse(database, 'fasta')
+    for record in data:
+            description = record.description
+            split = description.split(']')
+            breed = split[6]
+            breed = breed[8:]
+            breeds.append(breed)
+    p_dict = {}
+    for b,p in zip(breeds, p_values):
+        p_dict[b] = p
+            
+    return p_dict
 
    

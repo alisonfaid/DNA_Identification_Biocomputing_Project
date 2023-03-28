@@ -24,9 +24,9 @@ def create_alignment(database, target_seq):
         target sequence
 
     """
-    alignment = AlignIO.read(dog_breeds_file, 'fasta')
-    mystery_seq = SeqIO.read(mystery_file, 'fasta')
-    alignment.append(mystery_seq)
+    alignment = AlignIO.read(database, 'fasta')
+    seq = SeqIO.read(target_seq, 'fasta')
+    alignment.append(seq)
     
     return alignment
 
@@ -37,7 +37,7 @@ def phylogenetic_tree(alignment):
 
     Args:
         alignment (Bio.Align.MultipleSequenceAlignment): Multiple sequence alignment 
-            containing target sequence
+            containing target sequence and database
     
     Return:
         matplotlib.figure.Figure: Phylogenetic tree of all sequences in the alignment with
@@ -68,8 +68,7 @@ def phylogenetic_tree(alignment):
     return Phylo.draw(tree, axes=axes)
 
 
-alignment = create_alignment(mystery_file, dog_breeds_file)
-phylogenetic_tree(alignment)
+
 
 
     

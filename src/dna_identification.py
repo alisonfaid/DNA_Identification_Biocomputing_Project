@@ -97,7 +97,7 @@ def final_output(percent_id_list, database):
             breed = split[6]
             breed = breed[8:]
             new_line = '\n'
-            return f'ID: {record.id}{new_line}Closest Matching Dog Breed:{breed}{new_line}% Difference:{percentage_difference}%{new_line}{breed} Sequence:{record.seq[:30]}.....{record.seq[-5:]}'
+            return f'ID: {record.id}{new_line}Closest Matching Dog Breed:{breed}{new_line}Percentage Difference:{percentage_difference}%{new_line}{breed} Sequence:{record.seq[:30]}.....{record.seq[-5:]}'
 
 
 
