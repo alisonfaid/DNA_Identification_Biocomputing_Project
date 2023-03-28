@@ -52,7 +52,3 @@ def p_value(z_scores, database):
         p_dict[b] = p
             
     return p_dict
-
-dog_breeds = 'data/dog_breeds.fa'
-p = p_value([0], dog_breeds)
-print(p)
