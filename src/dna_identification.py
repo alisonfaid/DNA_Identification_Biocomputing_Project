@@ -1,31 +1,53 @@
 from Bio import SeqIO
 from Bio import Align
 
+def read_target_file(target_seq):
+    """ Reads the file containing the target sequence
+
+    Args:
+        target_seq (.fasta file): target sequence file in fasta format
+
+    Returns:
+        SeqRecord: target sequence
+    """
+    seq = SeqIO.read(target_seq, 'fasta')
+    return seq
+
+def parse_database_file(database):
+    """Reads in the database file and creates FastaIterator
+
+    Args:
+        database (.fasta file): file containing multiple sequences to compare to the target
+            sequence
+
+    Returns:
+        FastaIterator: database sequences
+    """
+    data = SeqIO.parse(database, 'fasta')
+    return data 
+
+
 
 def alignment(unknown_seq, database):
     """
     Summary:
-    - Reads in the target sequence as a SeqRecord object
-    - Reads in the database as a FastaIterator
     - Creates alignments of the target sequence to each sequence in the database
     - Calculates a score for the number of aligned amino acids between the 
       target sequence and the database 
     - Stores the scores in a list 
 
     Args:
-        unknown_seq (.fasta file): sequence to compare to sequences in the database
-        database (.fasta file): file containing multiple sequences to compare the 
+        unknown_seq (SeqRecord): sequence to compare to sequences in the database
+        database (FastaIterator): file containing multiple sequences to compare the 
             unknown_seq to 
 
     Returns:
         list: alignment scores for each alignment
     """
-    seq = SeqIO.read(unknown_seq, 'fasta')
-    data = SeqIO.parse(database, 'fasta')
     aligner = Align.PairwiseAligner(match_score = 1.0)
     alignments = []
-    for i in data:
-        score = aligner.score(seq, i)
+    for i in database:
+        score = aligner.score(unknown_seq, i)
         alignments.append(score)
     return alignments
 
@@ -42,9 +64,8 @@ def seq_lens(database):
     Returns:
         list: lengths of each sequence in the database 
     """
-    data = SeqIO.parse(database, 'fasta')
     lengths = []
-    for i in data:
+    for i in database:
         seq_length = len(i)
         lengths.append(seq_length)
     return lengths
@@ -100,11 +121,6 @@ def final_output(percent_id_list, database):
             return f'ID: {record.id}{new_line}Closest Matching Dog Breed:{breed}{new_line}Percentage Difference:{percentage_difference}%{new_line}{breed} Sequence:{record.seq[:30]}.....{record.seq[-5:]}'
 
 
-
-
-
-
-            
 
 
 
