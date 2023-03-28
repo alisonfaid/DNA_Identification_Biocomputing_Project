@@ -5,11 +5,6 @@ from Bio.Phylo.TreeConstruction import DistanceCalculator
 from Bio.Phylo.TreeConstruction import DistanceTreeConstructor
 import matplotlib.pyplot as plt
 
-
-
-mystery_file = 'data/mystery.fa'
-dog_breeds_file = 'data/dog_breeds.fa'
-
 def create_alignment(database, target_seq):
     """
     Summary:
